@@ -37,3 +37,8 @@ gradle.taskGraph.whenReady {
       test.enabled = false
     }
 }
+
+jar {
+    baseName = 'app'
+    version = '0.0.1'
+}
