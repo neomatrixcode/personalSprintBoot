@@ -1,6 +1,7 @@
 HELP.md
 .gradle
 build/
+!build/libs/gs-rest-service-0.1.0.jar
 !gradle/wrapper/gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.propierties
 !**/src/main/**/build/
