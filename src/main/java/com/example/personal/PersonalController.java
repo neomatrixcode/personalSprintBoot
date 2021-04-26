@@ -22,6 +22,15 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 public class PersonalController {
 	private final PersonalRepository repository;
@@ -30,6 +39,15 @@ public class PersonalController {
 	    this.repository = repository;
 	  }
 
+
+    @Operation(summary = "Obtener los datos de todo el personal")
+    @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Personal",
+    content = { @Content(mediaType = "application/json",
+      schema = @Schema(implementation = Personal.class)) }),
+    @ApiResponse(responseCode = "400", description = "Id invalido",
+    content = @Content),
+    @ApiResponse(responseCode = "404", description = "Personal no encontrado", content = @Content) })
     @GetMapping("/personal")
 	  CollectionModel<EntityModel<Personal>> all() {
 
@@ -42,6 +60,14 @@ public class PersonalController {
   	return CollectionModel.of(personals, linkTo(methodOn(PersonalController.class).all()).withSelfRel());
 	}
 
+    @Operation(summary = "Obtener los datos de un personal por su id")
+    @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Personal",
+    content = { @Content(mediaType = "application/json",
+      schema = @Schema(implementation = Personal.class)) }),
+    @ApiResponse(responseCode = "400", description = "Id invalido",
+    content = @Content),
+    @ApiResponse(responseCode = "404", description = "Personal no encontrado", content = @Content) })
 	@GetMapping("/personal/{id}")
 	EntityModel<Personal> one(@PathVariable Long id) {
 
