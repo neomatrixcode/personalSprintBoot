@@ -31,12 +31,26 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @RestController
 public class PersonalController {
 	private final PersonalRepository repository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	PersonalController(PersonalRepository repository) {
+
+    @PostMapping("/sign-up")
+    public Personal signUp(@RequestBody Personal user) {
+        user.setContrasenia(bCryptPasswordEncoder.encode(user.getContrasenia()));
+        repository.save(user);
+        return user;
+    }
+
+	PersonalController(PersonalRepository repository,BCryptPasswordEncoder bCryptPasswordEncoder) {
 	    this.repository = repository;
+	    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	  }
 
 
@@ -60,7 +74,8 @@ public class PersonalController {
   	return CollectionModel.of(personals, linkTo(methodOn(PersonalController.class).all()).withSelfRel());
 	}
 
-    @Operation(summary = "Obtener los datos de un personal por su id")
+
+    @Operation(summary = "Obtener los datos de un personal por su id", security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Personal",
     content = { @Content(mediaType = "application/json",
