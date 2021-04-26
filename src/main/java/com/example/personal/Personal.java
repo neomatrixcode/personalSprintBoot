@@ -12,7 +12,7 @@ public class Personal {
   private @Id @GeneratedValue Long id;
   private String nombre;
   private String apellidoPaterno;
-  private String apellidomaterno;
+  private String apellidoMaterno;
   private String email;
   private String rol;
   private String usuario;
@@ -21,10 +21,11 @@ public class Personal {
   protected Personal() {}
 
   public Personal(String nombre, String apellidoPaterno, String usuario, String contrasenia, String rol, String email) {
-    this.nombre = nombre;
     this.usuario = usuario;
     this.contrasenia = contrasenia;
+    this.nombre = nombre;
     this.apellidoPaterno = apellidoPaterno;
+    this.apellidoMaterno = apellidoMaterno;
     this.rol = rol;
     this.email = email;
   }
@@ -32,17 +33,24 @@ public class Personal {
   @Override
   public String toString() {
     return String.format(
-        "Personal[id=%d, nombre='%s', apellidoPaterno='%s', usuario='%s']",
-        id, nombre, apellidoPaterno, usuario);
+        "Personal[id=%d, usuario='%s', nombre='%s', apellidoPaterno='%s', apellidoMaterno='%s', rol='%s', email='%s']",
+        id, usuario, nombre, apellidoPaterno, apellidoMaterno, rol, email);
   }
 
   public Long getId() {
     return id;
   }
 
+
+  public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
   public String getNombre() {
     return nombre;
   }
+
+
 
   public void setUsuario(String usuario) {
         this.usuario = usuario;
@@ -76,8 +84,20 @@ public class Personal {
     return contrasenia;
   }
 
+  public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+  }
+
   public String getApellidoPaterno() {
     return apellidoPaterno;
+  }
+
+  public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+  }
+
+  public String getApellidoMaterno() {
+    return apellidoMaterno;
   }
 
   @Override

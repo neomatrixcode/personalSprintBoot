@@ -44,6 +44,11 @@ public class PersonalController {
     @PostMapping("/sign-up")
     public Personal signUp(@RequestBody Personal user) {
         user.setContrasenia(bCryptPasswordEncoder.encode(user.getContrasenia()));
+        user.setNombre(user.getNombre());
+        user.setApellidoPaterno(user.getApellidoPaterno());
+        user.setApellidoMaterno(user.getApellidoMaterno());
+        user.setRol(user.getRol());
+        user.setEmail(user.getEmail());
         repository.save(user);
         return user;
     }
